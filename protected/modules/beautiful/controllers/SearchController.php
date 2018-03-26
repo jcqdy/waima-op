@@ -1,6 +1,6 @@
 <?php
 
-class SearchController extends Controller
+class SearchController extends H5Controller
 {
     public function actionIndex()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class MessageController extends Controller
+class MessageController extends H5Controller
 {
     public function actionList()
     {

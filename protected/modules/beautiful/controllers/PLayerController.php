@@ -1,6 +1,6 @@
 <?php
 
-class PLayerController extends Controller
+class PLayerController extends H5Controller
 {
     public function actionList()
     {

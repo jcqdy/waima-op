@@ -1,6 +1,6 @@
 <?php
 
-class LikeController extends Controller
+class LikeController extends H5Controller
 {
     public function actionIndex()
     {
