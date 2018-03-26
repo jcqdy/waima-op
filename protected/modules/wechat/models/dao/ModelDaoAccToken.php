@@ -29,7 +29,7 @@ class ModelDaoAccToken extends ModelDataMongoCollection
             self::EXPIRE_LIMIT => $expireLimit,
             self::EXPIRE_TIME => $expireTime,
         ];
-
+        
         $this->add($doc);
     }
 

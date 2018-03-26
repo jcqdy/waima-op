@@ -22,8 +22,8 @@ return array(
         'application.components.filters.*',
         'application.components.dto.*',
         'application.lib.*',
-        'yii-ext.helpers.*',
         'application.lib.helpers.*',
+        'yii-ext.helpers.*',
         'yii-ext.vendors.*',
         'yii-ext.components.*',
         'yii-ext.components.cache.*',
@@ -35,6 +35,7 @@ return array(
     'modules' => array(
         'reward' => array(), // module setting
         'wechat' => array(),
+        'beautiful' => array(),
     ),
     // application components
     'components' => array(
@@ -49,11 +50,7 @@ return array(
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             'urlFormat' => 'path',
-            'rules' => array(
-                //pic模块合并到task模块
-                'pic/<action:\w+>' => 'task/<action>',
-                'pic/inner/<action:\w+>' => 'task/inner/<action>',
-            ),
+            'rules' => array(),
         ),
         'errorHandler'=>array(
             'errorAction'=>'site/error',
@@ -92,5 +89,12 @@ return array(
             ),
         ),
     ),
-    'params' => array(),
+    'params' => array(
+        'wechat' => array(
+            'getAccTokenUrl' => 'https://api.weixin.qq.com/cgi-bin/token',
+            'appId' => 'wx8721cee23d00aae3',
+            'appSecret' => 'd4e5c8cb9fb74ca68ce951d3435da6f2',
+            'getTicketUrl' => 'https://api.weixin.qq.com/cgi-bin/ticket/getticket',
+        ),
+    ),
 );
