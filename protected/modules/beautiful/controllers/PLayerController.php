@@ -16,7 +16,7 @@ class PLayerController extends Controller
     public function join()
     {
         $name = ParameterValidatorHelper::validateString($_POST, 'name');
-        $company = ParameterValidatorHelper::validateString($_POST, 'company');
+        $company = ParameterValidatorHelper::validateString($_POST, 'company'); 
         $job = ParameterValidatorHelper::validateString($_POST, 'job');
         $contact = ParameterValidatorHelper::validateString($_POST, 'contact');
         
