@@ -4,21 +4,45 @@ class ModelLogicPlayerList
 {
     protected $modelDaoPlayer;
 
+    protected $modelDaoLike;
+
     public function __construct()
     {
         $this->modelDaoPlayer = new ModelDaoPlayer();
+        $this->modelDaoLike = new ModelDaoLike();
     }
 
-    public function execute($sp, $num)
+    public function execute($sp, $num, $openId)
     {
-        $players = $this->modelDaoPlayer->querySortLike($sp, $num);
-        if (empty($players))
-            return ['players' => [], 'sp' => -1];
+        $myLike = $me = [];
 
-        $ret = ['players' => [], 'sp' => $sp + count($players)];
+        $day = date('Y-m-d', time());
+
+        $likes = $this->modelDaoLike->queryByOidDay($openId, $day);
+        foreach ($likes as $val) {
+            $myLike[] = $val['playerId'];
+        }
+        
+        $myPlayer = $this->modelDaoPlayer->findByPlayId($openId);
+        $players = $this->modelDaoPlayer->querySortLike($sp, $num);
+        if (empty($players)) {
+            if (! empty($me))
+                $me = new PlayerEntity($myPlayer);
+
+            return [
+                'myLike' => $myLike,
+                'me' => $me,
+                'players' => [],
+                'sp' => -1,
+            ];
+        }
+
+        $ret = ['myLike' => $myLike, 'me' => $me, 'players' => [], 'sp' => $sp + count($players)];
         foreach ($players as $player) {
             $ret['players'][] = new PlayerEntity($player);
         }
+        if (! empty($me))
+            $ret['me'] = new PlayerEntity($me);
 
         return $ret;
     }

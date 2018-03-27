@@ -9,8 +9,12 @@ class ModelLogicPlayerJoin
         $this->modelDaoPlayer = new ModelDaoPlayer();
     }
 
-    public function execute($name, $company, $job, $contact)
+    public function execute($name, $company, $job, $contact, $openId)
     {
+        $player = $this->modelDaoPlayer->findByOpenId($openId);
+        if (! empty($player))
+            throw new Exception('你已经发布过照片' ,10001);
+        
         $tmpDir = RUNTIME_DIR . '/tmp/';
         ! is_dir($tmpDir) && @mkdir($tmpDir, 0755, true);
 
@@ -18,7 +22,7 @@ class ModelLogicPlayerJoin
 
         $etag = QiniuHelper::uploadFile($tmpDir . $_FILES['pic']['name']);
 
-        $doc = $this->modelDaoPlayer->addPlayer($name, $company, $job, $etag, time(), $contact);
+        $doc = $this->modelDaoPlayer->addPlayer($name, $company, $job, $etag, time(), $contact, $openId);
 
         return new PlayerEntity($doc);
     }

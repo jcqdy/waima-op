@@ -18,12 +18,14 @@ class ModelDaoPlayer extends ModelDataMongoCollection
 
     const CONTACT = 'contact';
 
+    const OPEN_ID = 'openId';
+
     public function __construct()
     {
         parent::__construct('dbOp', 'beautiful', 'player');
     }
 
-    public function addPlayer($name, $company, $job, $picUrl, $uploadTime, $contact)
+    public function addPlayer($name, $company, $job, $picUrl, $uploadTime, $contact, $openId)
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::NAME] = $name;
@@ -33,6 +35,7 @@ class ModelDaoPlayer extends ModelDataMongoCollection
         $doc[self::PIC_URL] = $picUrl;
         $doc[self::UPLOAD_TIME] = $uploadTime;
         $doc[self::CONTACT] = $contact;
+        $doc[self::OPEN_ID] = $openId;
 
         $ret = $this->add($doc);
         if ($ret == false)
@@ -81,4 +84,11 @@ class ModelDaoPlayer extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
+    public function findByOpenId($openId)
+    {
+        $query[self::OPEN_ID] = $openId;
+
+        $ret = $this->findOne($query);
+        return DbWrapper::transform($ret);
+    }
 }

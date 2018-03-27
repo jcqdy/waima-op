@@ -4,6 +4,8 @@ class PlayerEntity
 {
     public $playerId;
 
+    public $openId;
+
     public $name;
 
     public $company;
@@ -22,7 +24,8 @@ class PlayerEntity
     {
         $urlPrefix = Yii::app()->params['qiniu_prefix'];
         
-        $this->playerId = isset($player['_id']) ? (string)$player['_id'] : '';
+//        $this->playerId = isset($player['_id']) ? (string)$player['_id'] : '';
+        $this->playerId = isset($player['openId']) ? (string)$player['openId'] : '';
         $this->name = isset($player['name']) ? $player['name'] : '';
         $this->company = isset($player['company']) ? $player['company'] : '';
         $this->like = isset($player['like']) ? $player['like'] : '';
