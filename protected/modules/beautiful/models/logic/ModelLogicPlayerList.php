@@ -42,7 +42,7 @@ class ModelLogicPlayerList
             $ret['players'][] = new PlayerEntity($player);
         }
         if (! empty($me))
-            $ret['me'] = new PlayerEntity($me);
+            $ret['me'] = new PlayerEntity($myPlayer);
 
         return $ret;
     }
