@@ -9,7 +9,7 @@ class PlayerController extends H5Controller
         $openId = ParameterValidatorHelper::validateString($_POST, 'openId');
 
         $modelLogicPlayerList = new ModelLogicPlayerList();
-        $ret = $modelLogicPlayerList->execute($sp, $num, $openId);
+        $ret = $modelLogicPlayerList->execute($sp, $num, $openId); 
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
