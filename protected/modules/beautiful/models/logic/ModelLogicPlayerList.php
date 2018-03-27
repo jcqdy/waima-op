@@ -23,7 +23,7 @@ class ModelLogicPlayerList
             $myLike[] = $val['playerId'];
         }
         
-        $myPlayer = $this->modelDaoPlayer->findByPlayId($openId);
+        $myPlayer = $this->modelDaoPlayer->findByOpenId($openId);
         $players = $this->modelDaoPlayer->querySortLike($sp, $num);
         if (empty($players)) {
             if (! empty($me))
