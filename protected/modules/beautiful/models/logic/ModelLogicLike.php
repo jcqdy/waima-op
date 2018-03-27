@@ -27,7 +27,7 @@ class ModelLogicLike
                 throw new Exception('今天已经赞过这位了哦', 10003);
         }
 
-        $player = $this->modelDaoPlayer->findByPlayId($playerId);
+        $player = $this->modelDaoPlayer->findByOpenId($playerId);
         if (empty($player))
             return;
 

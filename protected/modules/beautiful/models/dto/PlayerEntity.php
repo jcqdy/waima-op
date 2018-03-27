@@ -4,7 +4,7 @@ class PlayerEntity
 {
     public $playerId;
 
-    public $openId;
+//    public $openId;
 
     public $name;
 
