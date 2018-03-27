@@ -1,6 +1,6 @@
 <?php
 
-class PLayerController extends H5Controller
+class PlayerController extends H5Controller
 {
     public function actionList()
     {
@@ -13,7 +13,7 @@ class PLayerController extends H5Controller
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
-    public function join()
+    public function actionJoin()
     {
         $name = ParameterValidatorHelper::validateString($_POST, 'name');
         $company = ParameterValidatorHelper::validateString($_POST, 'company'); 
