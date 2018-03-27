@@ -20,6 +20,8 @@ class PlayerEntity
 
     public function __construct($player)
     {
+        $urlPrefix = Yii::app()->params['qiniu_prefix'];
+        
         $this->playerId = isset($player['_id']) ? (string)$player['_id'] : '';
         $this->name = isset($player['name']) ? $player['name'] : '';
         $this->company = isset($player['company']) ? $player['company'] : '';
@@ -27,7 +29,8 @@ class PlayerEntity
         if ($this->like < 0)
             $this->like = 0;
         $this->job = isset($player['job']) ? $player['job'] : '';
-        $this->picUrl = isset($player['picUrl']) ? $player['picUrl'] : '';
+        $picUrl = isset($player['picUrl']) ? $player['picUrl'] : '';
+        $this->picUrl = $urlPrefix . $picUrl;
         $this->uploadTime = isset($player['uploadTime']) ? $player['uploadTime'] : 0;
         $this->contact = isset($player['contact']) ? $player['contact'] : '';
     }

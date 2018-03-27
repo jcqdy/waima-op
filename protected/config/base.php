@@ -96,5 +96,6 @@ return array(
             'appSecret' => 'd4e5c8cb9fb74ca68ce951d3435da6f2',
             'getTicketUrl' => 'https://api.weixin.qq.com/cgi-bin/ticket/getticket',
         ),
+        'qiniu_prefix' => 'http://p540n9eee.bkt.clouddn.com/',
     ),
 );
