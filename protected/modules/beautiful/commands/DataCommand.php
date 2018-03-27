@@ -16,6 +16,7 @@ class DataCommand extends ConsoleCommand
                 'like' => rand(0, 199),
                 'uploadTime' => time(),
                 'contact' => '15951960273',
+                'openId' => (string)new MongoId(),
             ];
 
             $modelDaoPlayer->add($data);
