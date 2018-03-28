@@ -54,7 +54,7 @@ class ModelDaoPlayer extends ModelDataMongoCollection
 
     public function incLike($playerId, $inc)
     {
-        $query[self::_ID] = $playerId instanceof MongoId ? $playerId : new MongoId($playerId);
+        $query[self::OPEN_ID] = $playerId instanceof MongoId ? $playerId : new MongoId($playerId);
 
         $doc['$inc'] = [
             self::LIKE => $inc,
