@@ -52,9 +52,9 @@ class ModelDaoPlayer extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
-    public function incLike($playerId, $inc)
+    public function incLike($openId, $inc)
     {
-        $query[self::OPEN_ID] = $playerId instanceof MongoId ? $playerId : new MongoId($playerId);
+        $query[self::OPEN_ID] = $openId;
 
         $doc['$inc'] = [
             self::LIKE => $inc,
