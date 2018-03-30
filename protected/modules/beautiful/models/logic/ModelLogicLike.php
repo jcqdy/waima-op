@@ -21,7 +21,6 @@ class ModelLogicLike
         if (count($like) >= 3)
             throw new Exception('一天最多只能赞3个人哦', 10002);
 
-
         foreach ($like as $val) {
             if ($val['playerId'] == $playerId)
                 throw new Exception('今天已经赞过这位了哦', 10003);
