@@ -4,8 +4,8 @@ class MessageController extends H5Controller
 {
     public function actionList()
     {
-        $sp = ParameterValidatorHelper::validateInteger($_POST, 'sp', 0, PHP_INT_MAX, 0);
-        $num = ParameterValidatorHelper::validateInteger($_POST, 'num', 1, 100, 30);
+        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0, PHP_INT_MAX, 0);
+        $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 100, 30);
         
         $modelLogicMessageList = new ModelLogicMessageList();
         $ret = $modelLogicMessageList->execute($sp, $num);
@@ -15,7 +15,7 @@ class MessageController extends H5Controller
 
     public function actionSend()
     {
-        $content = ParameterValidatorHelper::validateString($_POST, 'content');
+        $content = ParameterValidatorHelper::validateString($_REQUEST, 'content');
         
         $modelLogicSendMessage = new ModelLogicSendMessage();
         $modelLogicSendMessage->execute($content);
