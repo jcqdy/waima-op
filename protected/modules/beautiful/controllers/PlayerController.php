@@ -9,8 +9,9 @@ class PlayerController extends H5Controller
         $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
 
         $modelLogicPlayerList = new ModelLogicPlayerList();
-        $ret = $modelLogicPlayerList->execute($sp, $num, $openId); 
+        $ret = $modelLogicPlayerList->execute($sp, $num, $openId);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
@@ -25,6 +26,7 @@ class PlayerController extends H5Controller
         $modelLogicPlayerJoin = new ModelLogicPlayerJoin();
         $ret = $modelLogicPlayerJoin->execute($name, $company, $job, $contact, $openId);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 }

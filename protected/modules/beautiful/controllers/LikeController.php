@@ -11,6 +11,7 @@ class LikeController extends H5Controller
         $modelLogicLike = new ModelLogicLike();
         $modelLogicLike->execute($playerId, $type, $openId);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
 }

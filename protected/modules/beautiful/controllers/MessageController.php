@@ -10,6 +10,7 @@ class MessageController extends H5Controller
         $modelLogicMessageList = new ModelLogicMessageList();
         $ret = $modelLogicMessageList->execute($sp, $num);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
@@ -20,6 +21,7 @@ class MessageController extends H5Controller
         $modelLogicSendMessage = new ModelLogicSendMessage();
         $modelLogicSendMessage->execute($content);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
 }

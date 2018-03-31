@@ -11,6 +11,7 @@ class SearchController extends H5Controller
         $modelLogicSearch = new ModelLogicSearch();
         $ret = $modelLogicSearch->execute($keyword, $sp, $num);
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 }
