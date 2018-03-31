@@ -8,10 +8,10 @@ class PlayerController extends H5Controller
         $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 100, 30);
         $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         $modelLogicPlayerList = new ModelLogicPlayerList();
         $ret = $modelLogicPlayerList->execute($sp, $num, $openId);
 
-        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
@@ -23,10 +23,10 @@ class PlayerController extends H5Controller
         $contact = ParameterValidatorHelper::validateString($_REQUEST, 'contact');
         $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
 
+        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         $modelLogicPlayerJoin = new ModelLogicPlayerJoin();
         $ret = $modelLogicPlayerJoin->execute($name, $company, $job, $contact, $openId);
 
-        header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 }
