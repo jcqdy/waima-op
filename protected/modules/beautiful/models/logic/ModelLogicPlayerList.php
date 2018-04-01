@@ -26,7 +26,7 @@ class ModelLogicPlayerList
         $myPlayer = $this->modelDaoPlayer->findByOpenId($openId);
         $players = $this->modelDaoPlayer->querySortLike($sp, $num);
         if (empty($players)) {
-            if (! empty($me))
+            if (! empty($myPlayer))
                 $me = new PlayerEntity($myPlayer);
 
             return [
@@ -41,7 +41,7 @@ class ModelLogicPlayerList
         foreach ($players as $player) {
             $ret['players'][] = new PlayerEntity($player);
         }
-        if (! empty($me))
+        if (! empty($myPlayer))
             $ret['me'] = new PlayerEntity($myPlayer);
 
         return $ret;

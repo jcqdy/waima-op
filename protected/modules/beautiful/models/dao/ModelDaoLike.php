@@ -18,7 +18,7 @@ class ModelDaoLike extends ModelDataMongoCollection
     public function addLike($playerId, $day, $openId)
     {
         $doc[self::_ID] = new MongoId();
-        $doc[self::PLAYER_ID] = $playerId instanceof MongoId ? $playerId : new MongoId($playerId);
+        $doc[self::PLAYER_ID] = $playerId;
         $doc[self::DAY] = $day;
         $doc[self::OPEN_ID] = $openId;
 
@@ -36,5 +36,14 @@ class ModelDaoLike extends ModelDataMongoCollection
 
         $ret = $this->query($query);
         return DbWrapper::transform($ret);
+    }
+
+    public function delLike($playerId, $day, $openId)
+    {
+        $query[self::PLAYER_ID] = $playerId;
+        $query[self::DAY] = $day;
+        $query[self::OPEN_ID] = $openId;
+
+        $this->remove($query);
     }
 }
