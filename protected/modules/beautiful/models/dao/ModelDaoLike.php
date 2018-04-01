@@ -46,4 +46,14 @@ class ModelDaoLike extends ModelDataMongoCollection
 
         $this->remove($query);
     }
+
+    public function findLike($playerId, $day, $openId)
+    {
+        $query[self::PLAYER_ID] = $playerId;
+        $query[self::DAY] = $day;
+        $query[self::OPEN_ID] = $openId;
+
+        $ret = $this->findOne($query);
+        return DbWrapper::transform($ret);
+    }
 }

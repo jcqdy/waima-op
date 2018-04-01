@@ -31,6 +31,10 @@ class ModelLogicLike
             }
             $this->modelDaoLike->addLike($playerId, $day, $openId);
         } else {
+            $like = $this->modelDaoLike->findLike($playerId, $day, $openId);
+            if (empty($like))
+                return;
+
             $this->modelDaoLike->delLike($playerId, $day, $openId);
         }
 
