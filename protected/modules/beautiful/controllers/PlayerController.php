@@ -6,7 +6,8 @@ class PlayerController extends H5Controller
     {
         $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0, PHP_INT_MAX, 0);
         $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 100, 30);
-        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+//        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+        $openId = strval($_SERVER['HTTP_USER_AGENT'].IPHelper::IP());
 
         header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         $modelLogicPlayerList = new ModelLogicPlayerList();
@@ -21,7 +22,8 @@ class PlayerController extends H5Controller
         $company = ParameterValidatorHelper::validateString($_REQUEST, 'company');
         $job = ParameterValidatorHelper::validateString($_REQUEST, 'job');
         $contact = ParameterValidatorHelper::validateString($_REQUEST, 'contact');
-        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+//        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+        $openId = strval($_SERVER['HTTP_USER_AGENT'].IPHelper::IP());
 
         header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         $modelLogicPlayerJoin = new ModelLogicPlayerJoin();

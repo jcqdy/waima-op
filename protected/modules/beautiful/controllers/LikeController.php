@@ -6,7 +6,8 @@ class LikeController extends H5Controller
     {
         $playerId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'playerId');
         $type = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'type', [0,1]);
-        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+//        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+        $openId = strval($_SERVER['HTTP_USER_AGENT'].IPHelper::IP());
 
         header("ACCESS-CONTROL-ALLOW-ORIGIN:http://activity-ktv.camera360.com");
         $modelLogicLike = new ModelLogicLike();
