@@ -4,7 +4,7 @@ class SearchController extends H5Controller
 {
     public function actionIndex()
     {
-        LogHelper::error($_SERVER['HTTP_USER_AGENT']);
+        LogHelper::error($_SERVER['HTTP_USER_AGENT'].IPHelper::IP());
 
         $keyword = ParameterValidatorHelper::validateArray($_REQUEST, 'keyword', ' ');
         $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0, PHP_INT_MAX, 0);
