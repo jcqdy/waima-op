@@ -17,7 +17,7 @@ class ModelLogicLike
     {
         $day = date('Y-m-d', time());
 
-        $player = $this->modelDaoPlayer->findByOpenId($playerId);
+        $player = $this->modelDaoPlayer->findByPlayId($playerId);
         if (empty($player))
             return;
 
