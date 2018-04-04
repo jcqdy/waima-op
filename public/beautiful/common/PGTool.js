@@ -1,1 +1,480 @@
-!function(){var t="",e=function(){},i=e.prototype;i.server=window.PGServer;var s=function(){var e=navigator.userAgent;return{ios:!!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:-1<e.indexOf("Android")||-1<e.indexOf("Linux"),weixin:-1<e.indexOf("MicroMessenger")}},c=function(){window.PG.setConfig({mode:"dev",channel:"native",appName:"demo",debug:!1})},f=function(e,t,o){var n={jsApiList:[t]};e.checkJsApi(n).then(function(e){var n=0;s().ios&&(n=e.checkResult[t]),s().android&&(n=e.apiResult[t]),o&&o(n)})},h=function(n,e){s().weixin?window.PG.setConfig({mode:"dev",channel:"wx",appName:"zipai",WXRegisterUrl:location.protocol+"//photobazaar.camera360.com/photoBazaar/oauth/getSignature",debug:!1}):c(),""==t?window.PG.ready().then(function(e){t=e,n&&n(e)}):n&&n(t)},d=function(e,n,t,o,i){var r,a,u=(r=new RegExp("(^|&)"+"fromOrigin"+"=([^&]*)(&|$)","i"),null!=(a=window.location.search.substr(1).match(r))?decodeURIComponent(a[2]):null);e.onWebShareDefault({title:u&&s().android?t:n,desc:u&&s().android?n:t,link:o,imgUrl:i,trigger:function(e){},success:function(e){},cancel:function(e){},fail:function(e){}}),e.onWebShareTimeline({title:s().weixin?t:n,desc:s().weixin?n:t,link:o,imgUrl:i,trigger:function(e){},success:function(e){},cancel:function(e){},fail:function(e){}})},u=function(e,n,t,o,i,r){n=n||"",t=t||"",o=o||location.href,i=i||"",r=r&&r.constructor==Array?r.join(","):"qq,wechat,wechatMoments,qqzone,weibo",c();var a="分享";("Netscape"==navigator.appName?navigator.language:navigator.userLanguage).toLowerCase().indexOf("zh")<0&&(a="Share");var u={toolBar:[{display:{text:a},action:"scheme://showShareDialog?chinnel="+r+"&title="+n+"&description="+t+"&url="+encodeURIComponent(o)+"&image="+encodeURIComponent(i)}]};d(e,n,t,o,i),e.configToolBar(u)};i.dealNativeUserInfo=function(e){var n={result:{mobile:"",uid:"",userToken:""}};return"object"!=typeof e&&void 0!==e&&(e=$.parseJSON(e)),s().android&&(null!=e.params?(n.result.uid=e.params.userId,n.result.userToken=e.params.token,null!=e.params.mobile&&(n.result.mobile=e.params.mobile)):null!=e.result.result?(n.result.uid=e.result.result.userId,n.result.userToken=e.result.result.token,null!=e.result.mobile&&(n.result.mobile=e.result.result.mobile)):(n.result.uid=e.result.userId,n.result.userToken=e.result.token,null!=e.result.mobile&&(n.result.mobile=e.result.mobile))),s().ios&&(null!=e.result.uid?(n.result.uid=e.result.uid,n.result.userToken=e.result.userToken):(n.result.uid=e.result.mUserId,n.result.userToken=e.result.mToken),n.result.mobile=e.result.mobile,null!=e.result.mobile&&(n.result.mobile=e.result.mobile)),n},i.shareUrl=function(t,o,i,r,a){h(function(n){s().weixin||f(n,"showShareChannelsMenuActionSheet",function(e){e?u(n,t,o,i,r,a):n.showMenuItems({list:[{name:"share",list:[{name:"wechat"},{name:"wechatMoments"}]}]}).then(function(e){})}),d(n,t,o,i,r)})},i.checkApis=function(n,t){h(function(e){f(e,n,function(e){t&&t(e)})})},i.PGSetReturnBtn=function(e){var t={};t=""==e?{action:"scheme://exit"}:{action:e},h(function(n){f(n,"configReturnBtn",function(e){e&&n.configReturnBtn(t)})})},i.getNativeInfo=function(n){h(function(e){e.getNativeInfo().then(function(e){n&&n(e)})})},i.pgLogin=function(n){h(function(e){e.login("").then(function(e){e.result.constructor===Object&&n&&n(e)})})},i.createSignature=function(n,t){h(function(e){e.createSignature(n).then(function(e){t&&t(e)})})},i.hideToolBar=function(n){var t={toolBar:[]};h(function(e){e.configToolBar(t).then(function(){n&&n()})})},i.configToolBar=function(n,t){h(function(e){e.configToolBar(n).then(function(){t&&t()})})},i.setPageShare=function(n,t,o,i,e){var r,a,u,c,l;s().android&&(h(function(e){d(e,n,t,o,i)}),e=e.constructor==Array?e.join(","):"wechat,wechatMoments,qqzone,weibo",location.href="scheme://showShareDialog?chinnel="+e),s().ios&&(e.constructor!=Array&&(e=["qq","qqzone","wechat","wechatMoments","weibo"]),r=n,a=t,u=o,c=i,l=e,h(function(n){f(n,"showShareChannelsMenuActionSheet",function(e){e&&n.showShareChannelsMenuActionSheet({shareChannels:l}).then(function(e){200==e.status&&n.shareUrl({channel:e.shareChannels,shareData:{title:r,desc:a,link:u,imgUrl:c}})})})}))},i.chooseImage=function(n,t){h(function(e){e.chooseImage({type:"all",imageSize:"w"+n}).then(function(e){t&&t(e)})})},i.navigateBack=function(){h(function(e){e.navigateBack()})},i.uploadImage=function(t,o){h(function(e){e.uploadImage(t).then(function(e){if(s().weixin){var n={media_id:e.serverId};i.server.getTicket(t.uploadUrl,n,function(e){o&&o(e)})}else e.data={serverId:e.serverId},o&&o(e)})})},i.saveImage=function(e,o){h(function(t){t.downloadImage({url:e}).then(function(e){var n={localId:e.localId};t.saveImage(n).then(function(e){o&&o(e)})})})},i.shareImage=function(e,o,i){h(function(t){t.downloadImage({url:e}).then(function(e){var n={localId:e.localId,desc:o};t.shareImage(n).then(function(e){i&&i(e)})})})},window.PGTool=e}();
+(function() {
+
+    var PGinterfaces = "";
+
+    var PGTool = function() {
+
+    };
+
+    var P = PGTool.prototype;
+
+    P.server = window.PGServer;
+
+    //检查平台
+    var checkFlatform = function() {
+        var u = navigator.userAgent;
+        return {
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+            weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+            camera360: u.toLowerCase().indexOf('camera360') > -1
+        };
+    };
+
+    //检查语言
+    var checkLanguage = function() {
+        var type = navigator.appName;
+        var lang = "";
+        if (type == "Netscape") {
+            lang = navigator.language;
+        } else {
+            lang = navigator.userLanguage;
+        }
+        //return lang.substr(0, 2);
+        return lang.toLowerCase();
+        //return "en";
+    };
+
+    /*
+     * title：配置PGBridge
+     * */
+    var configPg = function() {
+        window.PG.setConfig({
+            mode: 'dev',
+            channel: 'native',
+            appName: 'demo',
+            debug: false
+        });
+    };
+    /*
+     * title：配置微信
+     * */
+    var configWx = function() {
+        window.PG.setConfig({
+            mode: 'dev',
+            channel: 'wx',
+            appName: 'zipai',
+            WXRegisterUrl: location.protocol + '//photobazaar.camera360.com/photoBazaar/oauth/getSignature',
+            debug: false
+        });
+    };
+
+    var getQuery = function(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURIComponent(r[2]);
+        return null;
+    }
+
+    //检查app当前版本是否支持api
+    var checkApi = function(interfaces, api, callback) {
+        var data = {
+            jsApiList: [api]
+        };
+        interfaces.checkJsApi(data).then(function(res) {
+            var checkResult = 0;
+            if (checkFlatform().ios) {
+                checkResult = res.checkResult[api];
+            }
+            if (checkFlatform().android) {
+                checkResult = res.apiResult[api];
+            }
+            callback && callback(checkResult);
+        })
+    };
+
+
+    //初始化PG组件
+    var initPg = function(callback, p) {
+        if (checkFlatform().weixin) {
+            configWx();
+        } else {
+            configPg();
+        }
+        if (PGinterfaces != "") {
+            callback && callback(PGinterfaces);
+            return;
+        }
+        window.PG.ready().then(function(interfaces) {
+            PGinterfaces = interfaces;
+            callback && callback(interfaces);
+        });
+    };
+
+
+    /*
+     * name：配置分享文案 低版本 V7.0.2之前
+     * desc：需先初始化
+     * */
+    var configShareDocument = function(interfaces, title, desc, link, imgUrl) {
+        interfaces.onWebShareDefault({
+            title: window.shareTitle,
+            desc: window.shareDesc,
+            link: window.shareLink,
+            imgUrl: window.shareImgUrl,
+            trigger: function(res) {},
+            success: function(res) {
+                //window.PGShare(1);
+            },
+            cancel: function(res) {},
+            fail: function(res) {}
+        });
+        interfaces.onWebShareTimeline({
+            title: window.shareMommetsDesc,
+            link: window.shareLink,
+            imgUrl: window.shareImgUrl,
+            trigger: function(res) {},
+            success: function(res) {
+                //window.PGShare(1);
+            },
+            cancel: function(res) {},
+            fail: function(res) {}
+        });
+    };
+
+    //高版本分享
+    var newStoreShare = function(interfaces, title, desc, link, imgUrl, channel) {
+        title = title || "";
+        desc = desc || "";
+        link = link || location.href;
+        imgUrl = imgUrl || '';
+        showMenuItems(channel); //设置右上角分享平台
+        channel = channel && channel.constructor == Array ? channel.join(",") : "qq,wechat,wechatMoments,qqzone,weibo";
+        configPg();
+        configShareDocument(interfaces, title, desc, link, imgUrl);
+    };
+
+    //电商分享
+
+    var storeShare = function(interfaces, title, desc, link, imgUrl, channel) {
+        title = title || "";
+        desc = desc || "";
+        link = link || location.href;
+        imgUrl = imgUrl || '';
+        channel = channel && channel.constructor == Array ? channel.join(",") : "qq,wechat,wechatMoments,qqzone,weibo";
+        configPg();
+        var text = "分享";
+        if (checkLanguage().indexOf("zh") < 0) {
+            text = "Share";
+        }
+        var share = {
+            "toolBar": [{
+                "display": {
+                    "text": text
+                },
+                "action": "scheme://showShareDialog?chinnel=" + channel + "&title=" + encodeURIComponent(title) + "&description=" + encodeURIComponent(desc) + "&url=" + encodeURIComponent(link) + "&image=" + encodeURIComponent(imgUrl)
+            }]
+        };
+        configShareDocument(interfaces, title, desc, link, imgUrl);
+        interfaces.configToolBar(share);
+    };
+
+    var showMenuItems = function(channel) {
+        var list = [];
+        for (var i = 0; i < channel.length; i++) {
+            var info = {
+                "name": channel[i]
+            }
+            list.push(info);
+        }
+        initPg(function(interfaces) {
+            interfaces.showMenuItems({
+                list: [{
+                    name: 'share',
+                    list: list
+                }]
+            }).then(function(res) {
+
+            });
+        });
+
+    };
+
+
+
+    var insertPageShareIos = function(title, desc, link, imgUrl, channel) {
+        initPg(function(interfaces) {
+            checkApi(interfaces, "showShareChannelsMenuActionSheet", function(res) {
+                if (res) {
+                    interfaces.showShareChannelsMenuActionSheet({
+                        shareChannels: channel
+                    }).then(function(res) {
+                        if (res.status == 200) {
+                            interfaces.shareUrl({
+                                channel: res.shareChannels,
+                                shareData: {
+                                    title: title,
+                                    desc: desc,
+                                    link: link,
+                                    imgUrl: imgUrl
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        });
+    };
+
+
+
+    //处理用户信息  id token  因为之前安卓某一版本bug  返回字段出错 需兼容处理
+    P.dealNativeUserInfo = function(res) {
+        var userInfo = {
+            result: {
+                mobile: '',
+                uid: '',
+                userToken: ''
+            }
+        };
+        if (typeof res != "object" && typeof res != "undefined") {
+            res = $.parseJSON(res)
+        }
+        if (checkFlatform().android) {
+            if (res.params != undefined) {
+                userInfo.result.uid = res.params.userId;
+                userInfo.result.userToken = res.params.token;
+                if (res.params.mobile != undefined) {
+                    userInfo.result.mobile = res.params.mobile;
+                }
+            } else {
+                if (res.result.result != undefined) {
+                    userInfo.result.uid = res.result.result.userId;
+                    userInfo.result.userToken = res.result.result.token;
+                    if (res.result.mobile != undefined) {
+                        userInfo.result.mobile = res.result.result.mobile;
+                    }
+                } else {
+                    userInfo.result.uid = res.result.userId;
+                    userInfo.result.userToken = res.result.token;
+                    if (res.result.mobile != undefined) {
+                        userInfo.result.mobile = res.result.mobile;
+                    }
+                }
+            }
+        }
+
+        if (checkFlatform().ios) {
+            if (res.result.uid != undefined) {
+                userInfo.result.uid = res.result.uid;
+                userInfo.result.userToken = res.result.userToken;
+                userInfo.result.mobile = res.result.mobile;
+            } else {
+                userInfo.result.uid = res.result.mUserId;
+                userInfo.result.userToken = res.result.mToken;
+                userInfo.result.mobile = res.result.mobile;
+            }
+            if (res.result.mobile != undefined) {
+                userInfo.result.mobile = res.result.mobile;
+            }
+        }
+        return userInfo
+    };
+
+    //分享
+    P.shareUrl = function(title, desc, link, imgUrl, channel) {
+        initPg(function(interfaces) {
+            if (!checkFlatform().weixin) {
+                //判断是否支持新版分享  否则用旧版
+                checkApi(interfaces, 'showShareChannelsMenuActionSheet', function(res) {
+                    if (res) { //新版本
+                        newStoreShare(interfaces, title, desc, link, imgUrl, channel);
+                    }
+                });
+            }
+            configShareDocument(interfaces, title, desc, link, imgUrl);
+        }, "pgSahre");
+    };
+
+    //电商分享
+    P.storeShare = function(title, desc, link, imgUrl, channel) {
+        initPg(function(interfaces) {
+            if (!checkFlatform().weixin) {
+                //判断是否支持新版分享  否则用旧版
+                checkApi(interfaces, 'showShareChannelsMenuActionSheet', function(res) {
+                    if (res) { //新版本
+                        storeShare(interfaces, title, desc, link, imgUrl, channel);
+                    }
+                });
+            }
+            configShareDocument(interfaces, title, desc, link, imgUrl);
+        }, "pgSahre");
+    };
+
+
+    P.checkApis = function(api, callback) {
+        initPg(function(interfaces) {
+            checkApi(interfaces, api, function(res) {
+                callback && callback(res);
+            });
+        });
+    };
+
+    //配置返回键
+    P.PGSetReturnBtn = function(url) {
+        var returnBtn = {};
+        if (url == "") {
+            returnBtn = {
+                "action": "scheme://exit"
+            };
+        } else {
+            returnBtn = {
+                "action": url
+            };
+        }
+        initPg(function(interfaces) {
+            checkApi(interfaces, 'configReturnBtn', function(res) {
+                if (res) {
+                    interfaces.configReturnBtn(returnBtn);
+                }
+            });
+        });
+    };
+
+    //获取公共参数
+    P.getNativeInfo = function(callback) {
+        initPg(function(interfaces) {
+            interfaces.getNativeInfo().then(function(res) {
+                callback && callback(res);
+            });
+        });
+    };
+
+    //调用登录功能
+    P.pgLogin = function(callback) {
+        initPg(function(interfaces) {
+            interfaces.login("").then(function(res) {
+                if (res.result.constructor === Object) {
+                    callback && callback(res);
+                }
+            });
+        });
+    };
+
+    //iOS回弹效果关闭或开启
+    P.doWebViewEnableBounceVertical = function(verticalBounce, callback) {
+        initPg(function(interfaces) {
+            interfaces.doWebViewEnableBounceVertical({ verticalBounce: verticalBounce }).then(function(r) {});
+        });
+    };
+
+    //客户端签名
+    P.createSignature = function(data, callback) {
+        initPg(function(interfaces) {
+            interfaces.createSignature(data).then(function(res) {
+                callback && callback(res);
+            });
+        })
+    };
+
+    //隐藏右上角菜单
+    P.hideToolBar = function(callback) {
+        var hideBar = {
+            "toolBar": []
+        };
+        initPg(function(interfaces) {
+            interfaces.configToolBar(hideBar).then(function() {
+                callback && callback();
+            });
+        })
+    };
+    //设置右上角菜单
+    P.configToolBar = function(data, callback) {
+        initPg(function(interfaces) {
+            interfaces.configToolBar(data).then(function() {
+                callback && callback();
+            });
+        })
+    };
+
+    //配置页面内按钮分享
+    P.setPageShare = function(title, desc, link, imgUrl, channle) {
+        if (checkFlatform().android) {
+            initPg(function(interfaces) {
+                configShareDocument(interfaces, title, desc, link, imgUrl);
+            });
+            if (channle.constructor == Array) {
+                channle = channle.join(",");
+            } else {
+                channle = "wechat,wechatMoments,qqzone,weibo";
+            }
+            location.href = "scheme://showShareDialog?chinnel=" + channle
+        }
+        if (checkFlatform().ios) {
+            if (channle.constructor != Array) {
+                channle = ['qq', 'qqzone', 'wechat', 'wechatMoments', 'weibo'];
+            }
+            insertPageShareIos(title, desc, link, imgUrl, channle);
+        }
+    };
+
+    //选择照片
+    P.chooseImage = function(imageSize, callback) {
+        initPg(function(interfaces) {
+            interfaces.chooseImage({ type: 'all', imageSize: 'w' + imageSize }).then(function(res) {
+                callback && callback(res);
+            })
+        });
+    };
+    //上传照片
+    P.uploadImage = function(params, callback) {
+        initPg(function(interfaces) {
+            interfaces.uploadImage(params).then(function(res) {
+                if (checkFlatform().weixin) {
+                    var p = {
+                        "media_id": res.serverId
+                    };
+                    P.server.getTicket(params.uploadUrl, p, function(res) {
+                        callback && callback(res);
+                    });
+                } else {
+                    res.data = {
+                        serverId: res.serverId
+                    };
+                    callback && callback(res);
+                }
+            })
+        });
+    };
+
+    //保存
+    P.saveImage = function(localId, callback) {
+        initPg(function(interfaces) {
+            interfaces.downloadImage({ url: localId }).then(function(r) {
+                var params = {
+                    localId: r.localId
+                };
+                interfaces.saveImage(params).then(function(res) {
+                    callback && callback(res);
+                })
+            });
+        });
+    };
+
+    P.shareImage = function(url, desc, callback) {
+        initPg(function(interfaces) {
+            interfaces.downloadImage({ url: url }).then(function(r) {
+
+                var params = {
+                    localId: r.localId,
+                    desc: desc
+                };
+                interfaces.shareImage(params).then(function(res) {
+                    callback && callback(res);
+                })
+            });
+        })
+    };
+
+    //不同分享渠道定义不同文案
+    P.changeShareChanelText = function(r, callback) {
+        if (!checkFlatform().weixin) {
+            initPg(function(interfaces) {
+                interfaces.changeShareChanelText(r);
+            });
+        }
+    };
+
+    window.PGTool = PGTool;
+})
+();
