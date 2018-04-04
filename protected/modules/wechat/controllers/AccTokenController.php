@@ -14,6 +14,11 @@ class AccTokenController extends H5Controller
         ResponseHelper::outputJsonV2(['accessToken' => $accToken], 'ok', 200);
     }
 
+    /**
+     * 获取分享h5用的签名
+     *
+     * @throws ParameterValidationExpandException
+     */
     public function actionSig()
     {
         $url = ParameterValidatorHelper::validateString($_REQUEST, 'url');
