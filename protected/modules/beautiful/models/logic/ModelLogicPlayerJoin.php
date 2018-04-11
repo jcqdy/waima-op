@@ -12,8 +12,8 @@ class ModelLogicPlayerJoin
     public function execute($name, $company, $job, $contact, $openId)
     {
         $player = $this->modelDaoPlayer->findByOpenId($openId);
-//        if (! empty($player))
-//            throw new Exception('你已经发布过照片' ,10001);
+        if (! empty($player))
+            throw new Exception('你已经发布过照片' ,10001);
         
         $tmpDir = RUNTIME_DIR . '/tmp/';
         ! is_dir($tmpDir) && @mkdir($tmpDir, 0755, true);
